@@ -1,0 +1,86 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Rot surfaces without a push: COD changes, pymatgen releases, wheels move.
+  schedule:
+    - cron: "17 6 * * 1"
+
+jobs:
+  python:
+    # Linux, though development is on Windows. This is what catches
+    # .venv/Scripts vs .venv/bin and backslash path assumptions.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # torch's default PyPI wheel on Linux is a CUDA build, roughly 800 MB for
+      # a runner that has no GPU. The CPU index gives the same thing at a third
+      # of the size, and anneal only ever runs on CPU anyway.
+      - name: Install torch (CPU wheel)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e "backend[model,dev]"
+
+      - name: Lint
+        run: ruff check backend scripts tests
+
+      - name: Format check
+        run: ruff format --check backend scripts tests
+
+      # Behavioural tests. These load the real pretrained CHGNet -- there is no
+      # mock, because what is worth testing is that anneal drives it correctly.
+      - name: Behavioural tests
+        run: pytest tests/unit -q
+
+      # Honesty guards: the disclaimer still exists, the README's numbers still
+      # match the artifacts that produced them, no local path leaked into docs.
+      - name: Integrity tests
+        run: pytest tests/integrity -q
+
+      - name: Report counts
+        if: always()
+        run: |
+          echo "behavioural: $(pytest tests/unit --collect-only -q | tail -1)"
+          echo "integrity:   $(pytest tests/integrity --collect-only -q | tail -1)"
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      # ci, not install: the lockfile is the manifest, not a suggestion.
+      - name: Install
+        working-directory: web
+        run: npm ci
+
+      # The palette rule is the honesty mechanism in the design. The README
+      # describes assertPaletteDiscipline() as failing loudly; before this step
+      # it only wrote to a browser console no build ever read.
+      - name: Palette tests
+        working-directory: web
+        run: npm test
+
+      # A build is not a test, and it is not counted as one. It is here because
+      # a broken import in the viewer would otherwise only surface in a browser.
+      - name: Build
+        working-directory: web
+        run: npm run build

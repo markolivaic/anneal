@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-08-07T19:36:06+00:00",
+  "script": "scripts/build_catalog.py",
+  "provenance": "volume-bounded COD query, not a uniform sample of COD -- this count is a catalogue size, not a survival rate. See survey_cod_summary.json.",
+  "environment": {
+    "python": "3.12.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "pymatgen": "2026.5.4"
+  },
+  "query": {
+    "vmax_a3": 1500.0,
+    "frame_size": 191172,
+    "seed": 20260806
+  },
+  "fetched": 12000,
+  "kept": 8321,
+  "yield_pct": 69.34,
+  "max_atoms": 150,
+  "rejected_by_stage": {
+    "ordered": 2814,
+    "size_within_limit": 342,
+    "hydrogen_declared_present": 248,
+    "parsed": 241,
+    "geometry_sane": 28,
+    "elements_within_chgnet": 6
+  },
+  "sites": {
+    "min": 1,
+    "median": 88,
+    "p90": 132,
+    "max": 150
+  },
+  "crystal_systems": {
+    "monoclinic": 3241,
+    "triclinic": 3043,
+    "orthorhombic": 1043,
+    "cubic": 360,
+    "tetragonal": 267,
+    "trigonal": 202,
+    "hexagonal": 165
+  }
+}

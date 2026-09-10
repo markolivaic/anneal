@@ -1,0 +1,466 @@
+/*
+ * anneal: the page is one entry from a reference volume.
+ *
+ * Structural idea: a ruled two-column spread. The left column is the structure
+ * as RECORD (Hermann-Mauguin symbol, cell constants, site table in the CIF's own
+ * tag/value texture). The right column is the same structure as GEOMETRY. You
+ * edit in the record column; the geometry column answers. A hairline baseline
+ * runs under both and carries the force-convergence trace, the only thing on
+ * the page that moves by itself.
+ *
+ * The colour rule, which is also the honesty mechanism:
+ *
+ *     Hue distinguishes species. Saturation marks provenance.
+ *
+ * Elements get hue at low chroma and matched lightness, so they read as tinted
+ * greys. Vermilion is the only saturated thing on the page and belongs strictly
+ * to what CHGNet produced: relaxed positions, force vectors, the energy delta,
+ * the trace, the edited site. If it is saturated, a model made it up.
+ *
+ * That rule survives only with discipline: element chroma must stay low enough
+ * that no atom ever competes with the accent. If distinguishing O from N ever
+ * needs the tone pushed up, the rule is broken and strict monochrome is the
+ * better design.
+ *
+ * Light is the design. Dark is a courtesy: same layout, inverted ink, accent
+ * unchanged.
+ */
+
+:root {
+  --paper: #faf8f3;
+  --paper-sunk: #f2efe7;
+  --ink: #16150f;
+  --ink-muted: #5d5a4e;
+  --ink-faint: #8b8778;
+  --rule: #c9c4b7;
+  --rule-strong: #a8a294;
+
+  /* The one saturated colour. Model output only. */
+  --accent: #c2410c;
+  --accent-soft: rgba(194, 65, 12, 0.14);
+
+  --serif: "Libertinus Serif", "Charis SIL", "Source Serif 4", Cambria, Georgia, serif;
+  --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --step: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12120f;
+    --paper-sunk: #1a1a16;
+    --ink: #eae6da;
+    --ink-muted: #9b9686;
+    --ink-faint: #6d6959;
+    --rule: #35342c;
+    --rule-strong: #4a483d;
+    --accent: #e8623a;
+    --accent-soft: rgba(232, 98, 58, 0.18);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #12120f;
+  --paper-sunk: #1a1a16;
+  --ink: #eae6da;
+  --ink-muted: #9b9686;
+  --ink-faint: #6d6959;
+  --rule: #35342c;
+  --rule-strong: #4a483d;
+  --accent: #e8623a;
+  --accent-soft: rgba(232, 98, 58, 0.18);
+}
+
+:root[data-theme="light"] {
+  --paper: #faf8f3;
+  --paper-sunk: #f2efe7;
+  --ink: #16150f;
+  --ink-muted: #5d5a4e;
+  --ink-faint: #8b8778;
+  --rule: #c9c4b7;
+  --rule-strong: #a8a294;
+  --accent: #c2410c;
+  --accent-soft: rgba(194, 65, 12, 0.14);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums oldstyle-nums;
+}
+
+/* The page is a column: masthead, disclosure, then the spread taking the rest.
+   This replaces a calc(100vh - 132px) on the spread, which hard-coded the
+   height of the two bars above it. It was already wrong by a few pixels, which
+   is why the last heading in the record column sat clipped at the bottom, and
+   it would have gone wronger the moment either bar changed height. */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------- masthead */
+
+.masthead {
+  border-bottom: 1px solid var(--rule-strong);
+  padding: calc(var(--step) * 2.5) calc(var(--step) * 4);
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--step) * 4);
+}
+
+.masthead h1 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.theme-toggle {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  background: none;
+  border: 1px solid var(--rule);
+  color: var(--ink-muted);
+  padding: 3px 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.theme-toggle:hover { border-color: var(--ink-muted); color: var(--ink); }
+
+/* The disclosure sits in the masthead, not at the bottom of a page nobody
+   scrolls. A user who never opens the README still reads it. */
+.disclosure {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  padding: calc(var(--step) * 1.5) calc(var(--step) * 4);
+  font-size: 12.5px;
+  color: var(--ink-muted);
+}
+.disclosure .mark {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+/* ------------------------------------------------------------------ spread */
+
+.spread {
+  display: grid;
+  grid-template-columns: minmax(340px, 400px) 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+.column-record {
+  border-right: 1px solid var(--rule-strong);
+  overflow-y: auto;
+  /* Generous bottom padding: the catalogue is the last block in a scrolling
+     column, and a heading flush against the edge reads as a rendering bug. */
+  padding: calc(var(--step) * 3) calc(var(--step) * 4) calc(var(--step) * 8);
+}
+
+.column-geometry {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+}
+
+/* ------------------------------------------------------------------ record */
+
+.entry-head {
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: calc(var(--step) * 2);
+  margin-bottom: calc(var(--step) * 3);
+}
+
+.entry-head .formula {
+  font-size: 26px;
+  line-height: 1.15;
+  margin: 0 0 2px;
+  font-weight: 600;
+}
+
+.entry-head .hm {
+  font-size: 17px;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.entry-head .cod-ref {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  display: block;
+  margin-bottom: calc(var(--step) * 1.5);
+}
+.entry-head .cod-ref a { color: inherit; }
+
+h2.rule-heading {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3px;
+  margin: calc(var(--step) * 4) 0 calc(var(--step) * 1.5);
+}
+h2.rule-heading:first-of-type { margin-top: 0; }
+
+/* Cell constants: a tag/value block in the CIF's own texture. */
+.constants {
+  font-family: var(--mono);
+  font-size: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 calc(var(--step) * 3);
+}
+.constants div {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--rule);
+  padding: 2px 0;
+}
+.constants .tag { color: var(--ink-faint); }
+.constants .val { color: var(--ink); }
+
+/* The site table scrolls inside its own box. Without this, a 150-atom cell
+   pushes the edit controls and the relax button below the fold, and the first
+   thing a user does after picking an atom is hunt for a button. */
+.sites-scroll {
+  /* Sized so the edit controls, and the relax button in particular, stay above
+     the fold on a laptop screen. The table is the tallest thing in this column
+     and the only one that can give space back; everything below it is a control
+     the user needs within reach of the atom they just clicked. */
+  max-height: clamp(110px, 22vh, 260px);
+  overflow-y: auto;
+  border-bottom: 1px solid var(--rule);
+}
+
+h2.rule-heading .count {
+  float: right;
+  color: var(--ink-faint);
+  letter-spacing: 0;
+}
+
+/* Site table: Wyckoff-style, dense, one row per atom. */
+.sites {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11.5px;
+}
+.sites th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--rule);
+  padding: 3px 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+}
+.sites td {
+  padding: 2px 4px;
+  border-bottom: 1px dotted var(--rule);
+  white-space: nowrap;
+}
+.sites tbody tr { cursor: pointer; }
+.sites tbody tr:hover { background: var(--paper-sunk); }
+.sites tbody tr.selected { background: var(--accent-soft); }
+.sites tbody tr.selected td:first-child { box-shadow: inset 2px 0 0 var(--accent); }
+
+.sites .swatch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: -1px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+/* Edited sites carry the accent, because an edit is not the deposited record. */
+.sites tbody tr.edited td { color: var(--accent); }
+
+/* ------------------------------------------------------------------ edits */
+
+.edit-block { margin-top: calc(var(--step) * 2); }
+
+.edit-row {
+  display: flex;
+  gap: var(--step);
+  align-items: center;
+  margin-bottom: var(--step);
+}
+
+button, select, input[type="text"], input[type="number"] {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  padding: 4px 9px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--ink-muted); }
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+button.primary {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+button.primary:hover:not(:disabled) { background: var(--accent-soft); }
+
+/* Ink, not accent. Strain is pure geometry the user sets themselves, so it must
+   not carry the colour reserved for CHGNet. The relax button keeps the accent
+   because it is the one control that runs the model -- vermilion means CHGNet,
+   both what triggers it and what it produces. */
+input[type="range"] { flex: 1; accent-color: var(--ink-muted); }
+
+.hint {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  line-height: 1.4;
+  margin: var(--step) 0 0;
+}
+
+.history { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+.history div { padding: 1px 0; }
+
+.error {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  border-left: 2px solid var(--accent);
+  padding: 4px 8px;
+  margin-top: var(--step);
+  background: var(--accent-soft);
+}
+
+/* ---------------------------------------------------------------- geometry */
+
+#viewport { width: 100%; height: 100%; display: block; min-height: 320px; }
+
+.viewport-wrap { position: relative; overflow: hidden; }
+
+.readout {
+  position: absolute;
+  top: calc(var(--step) * 3);
+  right: calc(var(--step) * 3);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  text-align: right;
+  pointer-events: none;
+}
+.readout .energy { font-size: 21px; color: var(--ink); }
+.readout .delta { color: var(--accent); font-size: 13px; }
+.readout .label {
+  font-size: 9.5px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.legend {
+  position: absolute;
+  bottom: calc(var(--step) * 2);
+  left: calc(var(--step) * 3);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  display: flex;
+  gap: calc(var(--step) * 3);
+  flex-wrap: wrap;
+  max-width: 70%;
+}
+.legend span { display: flex; align-items: center; gap: 4px; }
+.legend .swatch {
+  width: 8px; height: 8px; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.25);
+}
+
+/* --------------------------------------------------------- the trace strip */
+
+.trace {
+  border-top: 1px solid var(--rule-strong);
+  padding: calc(var(--step) * 2) calc(var(--step) * 3);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: calc(var(--step) * 3);
+  align-items: center;
+  background: var(--paper);
+}
+
+/* Collapsed until there is a trace to draw. An empty plot area saying "press
+   relax" costs ~100px of the one panel that should dominate the page, to say
+   something the relax button already says. The strip appears when the first
+   step arrives and stays for the rest of the session. */
+.trace.is-idle {
+  grid-template-columns: 1fr;
+  padding: calc(var(--step) * 1) calc(var(--step) * 3);
+}
+.trace.is-idle #trace-canvas { display: none; }
+.trace.is-idle .trace-meta { text-align: left; }
+
+#trace-canvas { width: 100%; height: 76px; display: block; }
+
+.trace-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  text-align: right;
+  white-space: nowrap;
+}
+.trace-meta .status { color: var(--accent); }
+.trace-meta .estimate { color: var(--ink-faint); }
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--ink-faint);
+  font-size: 13.5px;
+  text-align: center;
+  padding: 0 40px;
+}
+
+/* ------------------------------------------------------------- catalogue */
+
+.catalog-list { font-family: var(--mono); font-size: 11.5px; }
+.catalog-list button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px dotted var(--rule);
+  padding: 4px 2px;
+  background: none;
+}
+.catalog-list button:hover { background: var(--paper-sunk); }
+.catalog-list .sg { color: var(--ink-faint); float: right; }
+
+@media (max-width: 860px) {
+  .spread { grid-template-columns: 1fr; height: auto; }
+  .column-record { border-right: none; border-bottom: 1px solid var(--rule-strong); }
+  .viewport-wrap { height: 60vh; }
+}

@@ -1,0 +1,570 @@
+{
+  "generated_at": "2026-08-17T19:25:27+00:00",
+  "script": "scripts/validate_against_experiment.py",
+  "question": "how far does a CHGNet cell relaxation land from the deposited experimental cell, and does that distance depend on the temperature the experiment was run at",
+  "environment": {
+    "python": "3.12.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "cpu_count": 16,
+    "torch": "2.13.0",
+    "chgnet": "0.4.2",
+    "pymatgen": "2026.5.4",
+    "pymatgen_core": "2026.7.31",
+    "device": "cpu"
+  },
+  "model": {
+    "package_version": "0.4.2",
+    "pretrained_version": "0.3.0",
+    "total_parameters": 412525,
+    "trainable_parameters": 412431,
+    "element_reference_energies": 94
+  },
+  "sample": {
+    "size": 200,
+    "seed": 20260814,
+    "catalog": "data/catalog.csv",
+    "candidates_in_size_range": 5202,
+    "site_range": [
+      2,
+      100
+    ]
+  },
+  "relaxation": {
+    "relax_cell": true,
+    "fmax_ev_per_a": 0.1,
+    "max_steps": 150,
+    "wall_clock_s": 0.0,
+    "median_relax_s": 25.21,
+    "median_steps": 41
+  },
+  "counts": {
+    "sampled": 200,
+    "relaxed": 200,
+    "converged": 196,
+    "not_converged": 4,
+    "excluded": 0
+  },
+  "excluded": {
+    "count": 0,
+    "entries": []
+  },
+  "not_converged": {
+    "count": 4,
+    "note": "kept in the CSV and reported below; these runs hit the step ceiling under-relaxed, so their errors are biased toward the deposited cell",
+    "cod_ids": [
+      1504777,
+      4321511,
+      4350528,
+      7202468
+    ]
+  },
+  "temperature": {
+    "tags_searched": [
+      "_cell_measurement_temperature",
+      "_diffrn_ambient_temperature"
+    ],
+    "preferred_tag": "_cell_measurement_temperature",
+    "sanity_range_k": [
+      1.0,
+      1500.0
+    ],
+    "cifs_read": 200,
+    "tag_used_counts": {
+      "none": 58,
+      "_cell_measurement_temperature": 132,
+      "_diffrn_ambient_temperature": 10
+    },
+    "with_usable_temperature": 142,
+    "with_usable_temperature_pct": 71.0,
+    "with_usable_temperature_denominator": "relaxed structures",
+    "rejected_values": [],
+    "bin_definitions": {
+      "lt_150k": "temperature < 150 K",
+      "150_250k": "150 K <= temperature <= 250 K",
+      "gt_250k": "temperature > 250 K",
+      "unknown": "no usable temperature tag in the CIF"
+    }
+  },
+  "statistics": {
+    "basis": "converged relaxations only",
+    "overall": {
+      "n": 196,
+      "volume_error_pct": {
+        "median_signed": 0.372,
+        "median_signed_ci95": [
+          0.327,
+          0.443
+        ],
+        "median_absolute": 0.392,
+        "median_absolute_ci95": [
+          0.333,
+          0.494
+        ],
+        "mean_signed": 1.569,
+        "q1": 0.228,
+        "q3": 2.033,
+        "iqr": 1.805,
+        "absolute_q1": 0.244,
+        "absolute_q3": 2.218,
+        "min": -5.871,
+        "max": 31.26,
+        "n_larger_than_deposited": 183,
+        "n_smaller_than_deposited": 9,
+        "n_abs_error_over_10pct": 4,
+        "n_abs_error_over_20pct": 2
+      },
+      "axis_error_pct": {
+        "a": {
+          "median_signed": 0.131,
+          "median_absolute": 0.145
+        },
+        "b": {
+          "median_signed": 0.123,
+          "median_absolute": 0.143
+        },
+        "c": {
+          "median_signed": 0.118,
+          "median_absolute": 0.139
+        }
+      },
+      "composition": {
+        "containing_carbon": 119,
+        "median_n_sites": 60,
+        "median_temperature_k": 208.0
+      }
+    },
+    "by_temperature_bin": {
+      "lt_150k": {
+        "n": 37,
+        "volume_error_pct": {
+          "median_signed": 0.319,
+          "median_signed_ci95": [
+            0.254,
+            0.382
+          ],
+          "median_absolute": 0.326,
+          "median_absolute_ci95": [
+            0.263,
+            0.401
+          ],
+          "mean_signed": 0.78,
+          "q1": 0.231,
+          "q3": 0.443,
+          "iqr": 0.212,
+          "absolute_q1": 0.234,
+          "absolute_q3": 0.45,
+          "min": -0.544,
+          "max": 5.351,
+          "n_larger_than_deposited": 35,
+          "n_smaller_than_deposited": 1,
+          "n_abs_error_over_10pct": 0,
+          "n_abs_error_over_20pct": 0
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.107,
+            "median_absolute": 0.109
+          },
+          "b": {
+            "median_signed": 0.104,
+            "median_absolute": 0.106
+          },
+          "c": {
+            "median_signed": 0.095,
+            "median_absolute": 0.095
+          }
+        },
+        "composition": {
+          "containing_carbon": 31,
+          "median_n_sites": 74,
+          "median_temperature_k": 100.0
+        }
+      },
+      "150_250k": {
+        "n": 36,
+        "volume_error_pct": {
+          "median_signed": 0.323,
+          "median_signed_ci95": [
+            0.243,
+            0.38
+          ],
+          "median_absolute": 0.323,
+          "median_absolute_ci95": [
+            0.243,
+            0.38
+          ],
+          "mean_signed": 0.646,
+          "q1": 0.223,
+          "q3": 0.432,
+          "iqr": 0.209,
+          "absolute_q1": 0.223,
+          "absolute_q3": 0.432,
+          "min": 0.132,
+          "max": 5.912,
+          "n_larger_than_deposited": 36,
+          "n_smaller_than_deposited": 0,
+          "n_abs_error_over_10pct": 0,
+          "n_abs_error_over_20pct": 0
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.114,
+            "median_absolute": 0.114
+          },
+          "b": {
+            "median_signed": 0.105,
+            "median_absolute": 0.105
+          },
+          "c": {
+            "median_signed": 0.099,
+            "median_absolute": 0.099
+          }
+        },
+        "composition": {
+          "containing_carbon": 34,
+          "median_n_sites": 72,
+          "median_temperature_k": 171.5
+        }
+      },
+      "gt_250k": {
+        "n": 65,
+        "volume_error_pct": {
+          "median_signed": 0.327,
+          "median_signed_ci95": [
+            0.259,
+            0.397
+          ],
+          "median_absolute": 0.334,
+          "median_absolute_ci95": [
+            0.279,
+            0.418
+          ],
+          "mean_signed": 1.346,
+          "q1": 0.214,
+          "q3": 0.589,
+          "iqr": 0.375,
+          "absolute_q1": 0.239,
+          "absolute_q3": 0.858,
+          "min": -5.227,
+          "max": 31.26,
+          "n_larger_than_deposited": 61,
+          "n_smaller_than_deposited": 4,
+          "n_abs_error_over_10pct": 2,
+          "n_abs_error_over_20pct": 1
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.111,
+            "median_absolute": 0.129
+          },
+          "b": {
+            "median_signed": 0.111,
+            "median_absolute": 0.123
+          },
+          "c": {
+            "median_signed": 0.112,
+            "median_absolute": 0.116
+          }
+        },
+        "composition": {
+          "containing_carbon": 49,
+          "median_n_sites": 67,
+          "median_temperature_k": 293.0
+        }
+      },
+      "unknown": {
+        "n": 58,
+        "volume_error_pct": {
+          "median_signed": 2.236,
+          "median_signed_ci95": [
+            1.825,
+            3.473
+          ],
+          "median_absolute": 2.254,
+          "median_absolute_ci95": [
+            1.888,
+            3.6
+          ],
+          "mean_signed": 2.897,
+          "q1": 0.708,
+          "q3": 3.874,
+          "iqr": 3.166,
+          "absolute_q1": 0.828,
+          "absolute_q3": 3.973,
+          "min": -5.871,
+          "max": 26.503,
+          "n_larger_than_deposited": 51,
+          "n_smaller_than_deposited": 4,
+          "n_abs_error_over_10pct": 2,
+          "n_abs_error_over_20pct": 1
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.717,
+            "median_absolute": 0.73
+          },
+          "b": {
+            "median_signed": 0.737,
+            "median_absolute": 0.78
+          },
+          "c": {
+            "median_signed": 0.767,
+            "median_absolute": 0.815
+          }
+        },
+        "composition": {
+          "containing_carbon": 5,
+          "median_n_sites": 28,
+          "median_temperature_k": null
+        }
+      }
+    }
+  },
+  "statistics_including_non_converged": {
+    "basis": "every relaxation that produced a cell, converged or not",
+    "overall": {
+      "n": 200,
+      "volume_error_pct": {
+        "median_signed": 0.381,
+        "median_signed_ci95": [
+          0.329,
+          0.45
+        ],
+        "median_absolute": 0.399,
+        "median_absolute_ci95": [
+          0.334,
+          0.535
+        ],
+        "mean_signed": 1.78,
+        "q1": 0.231,
+        "q3": 2.199,
+        "iqr": 1.968,
+        "absolute_q1": 0.244,
+        "absolute_q3": 2.278,
+        "min": -5.871,
+        "max": 36.589,
+        "n_larger_than_deposited": 187,
+        "n_smaller_than_deposited": 9,
+        "n_abs_error_over_10pct": 5,
+        "n_abs_error_over_20pct": 3
+      },
+      "axis_error_pct": {
+        "a": {
+          "median_signed": 0.135,
+          "median_absolute": 0.15
+        },
+        "b": {
+          "median_signed": 0.124,
+          "median_absolute": 0.15
+        },
+        "c": {
+          "median_signed": 0.12,
+          "median_absolute": 0.146
+        }
+      },
+      "composition": {
+        "containing_carbon": 123,
+        "median_n_sites": 59,
+        "median_temperature_k": 204.0
+      }
+    },
+    "by_temperature_bin": {
+      "lt_150k": {
+        "n": 40,
+        "volume_error_pct": {
+          "median_signed": 0.327,
+          "median_signed_ci95": [
+            0.263,
+            0.423
+          ],
+          "median_absolute": 0.329,
+          "median_absolute_ci95": [
+            0.268,
+            0.443
+          ],
+          "mean_signed": 1.015,
+          "q1": 0.234,
+          "q3": 0.65,
+          "iqr": 0.416,
+          "absolute_q1": 0.242,
+          "absolute_q3": 0.65,
+          "min": -0.544,
+          "max": 5.351,
+          "n_larger_than_deposited": 38,
+          "n_smaller_than_deposited": 1,
+          "n_abs_error_over_10pct": 0,
+          "n_abs_error_over_20pct": 0
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.11,
+            "median_absolute": 0.113
+          },
+          "b": {
+            "median_signed": 0.105,
+            "median_absolute": 0.108
+          },
+          "c": {
+            "median_signed": 0.101,
+            "median_absolute": 0.107
+          }
+        },
+        "composition": {
+          "containing_carbon": 34,
+          "median_n_sites": 72,
+          "median_temperature_k": 100.0
+        }
+      },
+      "150_250k": {
+        "n": 36,
+        "volume_error_pct": {
+          "median_signed": 0.323,
+          "median_signed_ci95": [
+            0.243,
+            0.38
+          ],
+          "median_absolute": 0.323,
+          "median_absolute_ci95": [
+            0.243,
+            0.38
+          ],
+          "mean_signed": 0.646,
+          "q1": 0.223,
+          "q3": 0.432,
+          "iqr": 0.209,
+          "absolute_q1": 0.223,
+          "absolute_q3": 0.432,
+          "min": 0.132,
+          "max": 5.912,
+          "n_larger_than_deposited": 36,
+          "n_smaller_than_deposited": 0,
+          "n_abs_error_over_10pct": 0,
+          "n_abs_error_over_20pct": 0
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.114,
+            "median_absolute": 0.114
+          },
+          "b": {
+            "median_signed": 0.105,
+            "median_absolute": 0.105
+          },
+          "c": {
+            "median_signed": 0.099,
+            "median_absolute": 0.099
+          }
+        },
+        "composition": {
+          "containing_carbon": 34,
+          "median_n_sites": 72,
+          "median_temperature_k": 171.5
+        }
+      },
+      "gt_250k": {
+        "n": 66,
+        "volume_error_pct": {
+          "median_signed": 0.329,
+          "median_signed_ci95": [
+            0.259,
+            0.405
+          ],
+          "median_absolute": 0.344,
+          "median_absolute_ci95": [
+            0.279,
+            0.447
+          ],
+          "mean_signed": 1.88,
+          "q1": 0.216,
+          "q3": 0.617,
+          "iqr": 0.401,
+          "absolute_q1": 0.24,
+          "absolute_q3": 0.984,
+          "min": -5.227,
+          "max": 36.589,
+          "n_larger_than_deposited": 62,
+          "n_smaller_than_deposited": 4,
+          "n_abs_error_over_10pct": 3,
+          "n_abs_error_over_20pct": 2
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.114,
+            "median_absolute": 0.13
+          },
+          "b": {
+            "median_signed": 0.111,
+            "median_absolute": 0.123
+          },
+          "c": {
+            "median_signed": 0.112,
+            "median_absolute": 0.118
+          }
+        },
+        "composition": {
+          "containing_carbon": 50,
+          "median_n_sites": 66,
+          "median_temperature_k": 293.0
+        }
+      },
+      "unknown": {
+        "n": 58,
+        "volume_error_pct": {
+          "median_signed": 2.236,
+          "median_signed_ci95": [
+            1.825,
+            3.473
+          ],
+          "median_absolute": 2.254,
+          "median_absolute_ci95": [
+            1.888,
+            3.6
+          ],
+          "mean_signed": 2.897,
+          "q1": 0.708,
+          "q3": 3.874,
+          "iqr": 3.166,
+          "absolute_q1": 0.828,
+          "absolute_q3": 3.973,
+          "min": -5.871,
+          "max": 26.503,
+          "n_larger_than_deposited": 51,
+          "n_smaller_than_deposited": 4,
+          "n_abs_error_over_10pct": 2,
+          "n_abs_error_over_20pct": 1
+        },
+        "axis_error_pct": {
+          "a": {
+            "median_signed": 0.717,
+            "median_absolute": 0.73
+          },
+          "b": {
+            "median_signed": 0.737,
+            "median_absolute": 0.78
+          },
+          "c": {
+            "median_signed": 0.767,
+            "median_absolute": 0.815
+          }
+        },
+        "composition": {
+          "containing_carbon": 5,
+          "median_n_sites": 28,
+          "median_temperature_k": null
+        }
+      }
+    }
+  },
+  "limitations": [
+    "The reference is a measured cell, not a DFT cell. This is CHGNet's distance from experiment, which is not the same quantity as its error against the DFT-PBE data it was trained on.",
+    "This measures geometry and nothing else. It is not evidence about the energies anneal reports, which have no experimental counterpart to be compared against at all. A cell landing within a percent of the measured one does not make an energy difference right.",
+    "Thermal expansion and DFT-PBE's lattice bias both act on this residual and point opposite ways. The temperature bins separate them only partially: a bin is a population of structures, not a controlled variable, so it differs in chemistry and cell size as well as in temperature. Each bin therefore reports its carbon-containing fraction and median site count next to its error, so the confound is visible instead of assumed.",
+    "Zero-point motion expands a real crystal even at 0 K. CHGNet predicts a static lattice, so even the coldest bin is not a like-for-like comparison.",
+    "a, b and c are compared vector by vector in the deposited setting. The cell filter deforms the cell continuously so the axes do not permute, but for a large or strongly sheared deformation the individual axis errors are less meaningful than the volume error. Volume is the robust number here.",
+    "fmax is a loose convergence criterion and, with the cell free, ASE judges it over atomic forces and cell stress together. A run marked converged sits in a shallow basin, not at a tight minimum.",
+    "Non-converged runs are under-relaxed, so their errors are biased toward the deposited cell. They are reported separately for that reason.",
+    "The sample is drawn from data/catalog.csv, which is a volume-bounded COD query already filtered for ordered sites, declared hydrogen and Z <= 94, and is further cut here to 2-100 sites. These statistics describe that population, not COD as a whole.",
+    "Hydrogen positions from X-ray refinement are poorly determined, and CHGNet moves them. Structures containing hydrogen are not separated out here."
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "generated_at": "2026-08-07T23:05:26+00:00",
+  "script": "scripts/benchmark.py",
+  "environment": {
+    "python": "3.12.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "cpu_count": 16,
+    "torch": "2.13.0",
+    "chgnet": "0.4.2",
+    "pymatgen": "2026.5.4",
+    "pymatgen_core": "2026.7.31",
+    "device": "cpu"
+  },
+  "model": {
+    "package_version": "0.4.2",
+    "pretrained_version": "0.3.0",
+    "total_parameters": 412525,
+    "trainable_parameters": 412431,
+    "element_reference_energies": 94
+  },
+  "model_load": {
+    "cold_s": 7.592,
+    "warm_s": 6e-06,
+    "note": "cold includes importing torch; warm is the cached instance"
+  },
+  "repeats": 3,
+  "measurements": [
+    {
+      "cod_id": 1100108,
+      "formula": "Fe",
+      "n_atoms": 2,
+      "atom_graph_edges": 128,
+      "single_point_ms": 86.7,
+      "relax_s": 0.72,
+      "relax_steps": 10,
+      "ms_per_step": 71.8
+    },
+    {
+      "cod_id": 1538012,
+      "formula": "BaY2CuO5",
+      "n_atoms": 36,
+      "atom_graph_edges": 2280,
+      "single_point_ms": 248.6,
+      "relax_s": 12.14,
+      "relax_steps": 48,
+      "ms_per_step": 252.9
+    },
+    {
+      "cod_id": 2001835,
+      "formula": "H13C16IN2O",
+      "n_atoms": 66,
+      "atom_graph_edges": 5418,
+      "single_point_ms": 470.0,
+      "relax_s": 38.79,
+      "relax_steps": 74,
+      "ms_per_step": 524.2
+    },
+    {
+      "cod_id": 2002248,
+      "formula": "La2Zr2O7",
+      "n_atoms": 88,
+      "atom_graph_edges": 5424,
+      "single_point_ms": 413.7,
+      "relax_s": 20.04,
+      "relax_steps": 43,
+      "ms_per_step": 466.2
+    },
+    {
+      "cod_id": 2211979,
+      "formula": "InH22C16S2N8Cl3O",
+      "n_atoms": 106,
+      "atom_graph_edges": 8048,
+      "single_point_ms": 658.0,
+      "relax_s": 61.0,
+      "relax_steps": 88,
+      "ms_per_step": 693.2
+    },
+    {
+      "cod_id": 7050089,
+      "formula": "AgH10C12N5O3",
+      "n_atoms": 124,
+      "atom_graph_edges": 10104,
+      "single_point_ms": 796.9,
+      "relax_s": 45.37,
+      "relax_steps": 56,
+      "ms_per_step": 810.2
+    },
+    {
+      "cod_id": 7708914,
+      "formula": "H9C5N7O4",
+      "n_atoms": 150,
+      "atom_graph_edges": 14244,
+      "single_point_ms": 1204.5,
+      "relax_s": 67.21,
+      "relax_steps": 51,
+      "ms_per_step": 1317.8
+    }
+  ],
+  "cost_model": {
+    "form": "ms_per_step = intercept_ms + ms_per_edge * atom_graph_edges",
+    "intercept_ms": 38.998,
+    "ms_per_edge": 0.084636,
+    "r_squared": 0.9841,
+    "rel_spread": 0.306,
+    "floor_ms": 71.8,
+    "step_range": [
+      10,
+      88
+    ],
+    "median_steps": 51,
+    "fitted_on": 7
+  }
+}
