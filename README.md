@@ -55,20 +55,22 @@ A universal interatomic potential is 412,525 parameters and runs a relaxation on
 laptop CPU. I wanted to see whether that is enough to make crystal structures
 something you poke at rather than read about.
 
-The interesting part turned out not to be the model. It was the gap between "COD
-has 534,673 structures" and what you can actually hand to one. COD is a dump of
-experimental refinements: partial occupancies, disordered sites, hydrogen the
-X-rays could not see. CHGNet does not error on any of that. It returns a
-confident number that means nothing. So the first thing built here was not the
-viewer, it was `scripts/survey_cod.py`, which measures how much of COD survives a
-filter. The answer decides what the project may honestly claim, and it is above,
+Getting the model running took an afternoon. Then I pointed it at real COD
+entries and most of them were not structures a potential can read: partial
+occupancies, disordered sites, hydrogen the X-rays never located. CHGNet does not
+error on any of that. It takes the input and returns a confident number that
+means nothing, which is worse than failing. So the first thing built here was not
+the viewer, it was `scripts/survey_cod.py`, which measures how much of COD
+survives a filter. The answer decides what the project may honestly claim, and it is above,
 not buried at the bottom.
 
 Two findings changed the design, and both are in the tests so they cannot quietly
 stop being true:
 
 **A symmetric edit of a symmetric crystal produces no forces at all.** Remove a
-sodium from rocksalt NaCl and the maximum force is 1.8×10⁻⁶ eV/Å. Every site sits
+sodium from rocksalt NaCl and the maximum force is 1.8×10⁻⁶ eV/Å. I spent an
+hour treating that as a bug, because taking an atom out of a lattice obviously
+has to pull on its neighbours. It does not. Every site sits
 at an inversion centre; removing one leaves the survivors at inversion centres
 too, where forces vanish exactly. The structure is already at a stationary point.
 With positions alone there is nothing to relax and nothing to show, and the
@@ -129,6 +131,10 @@ element's chroma is ever raised toward the accent.
 Type is Libertinus Serif, which descends from Linux Libertine, was built for
 scientific typesetting, and renders the combining overbar in Hermann-Mauguin
 symbols that most interface faces break.
+
+The browser side is plain TypeScript on Vite with three.js and nothing else. One
+route, one canvas, and an animation loop that owns the frame. A reconciler would
+sit between this code and the renderer without earning its place.
 
 ## Quick start
 
