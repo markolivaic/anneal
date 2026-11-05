@@ -2,8 +2,9 @@
 
 COD is a dump of experimental refinements. Many entries carry partial site
 occupancies, disordered sites, or hydrogen the diffraction never located.
-CHGNet does not error on those -- it returns a confident number that means
-nothing. Everything anneal offers has passed `evaluate` below.
+CHGNet raises an error on partial occupancy and disorder, and on missing hydrogen
+it returns a confident number that means nothing. Everything anneal offers has
+passed `evaluate` below.
 
 The stage order is load-bearing. Geometry is checked before size so that a
 structure failing only at size has cleared every other criterion; that is what

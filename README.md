@@ -60,9 +60,9 @@ something you poke at rather than read about.
 
 Getting the model running took an afternoon. Then I pointed it at real COD
 entries and most of them were not structures a potential can read: partial
-occupancies, disordered sites, hydrogen the X-rays never located. CHGNet does not
-error on any of that. It takes the input and returns a confident number that
-means nothing, which is worse than failing. So the first thing built here was not
+occupancies, disordered sites, hydrogen the X-rays never located. CHGNet raises an
+error on the first two. On missing hydrogen it takes the input and returns a
+confident number that means nothing, which is worse than failing. So the first thing built here was not
 the viewer, it was `scripts/survey_cod.py`, which measures how much of COD
 survives a filter. The answer decides what the project may honestly claim, and it is above,
 not buried at the bottom.
