@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>anneal: CHGNet relaxation of COD structures</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <h1>anneal</h1>
+      <button class="theme-toggle" id="theme-toggle">theme</button>
+    </header>
+
+    <!--
+      The disclosure sits here, in the running product, not only in the README.
+      A user who never opens the repository still learns what is real.
+
+      One line on purpose. It was four, and a wall of text in a toolbar gets
+      skipped, and a skipped disclosure does nothing at all. The longer version
+      lives in the README; the title attribute carries it for anyone who hovers.
+    -->
+    <div
+      class="disclosure"
+      title="Relaxed positions, forces and energies are CHGNet predictions, not deposited experimental data. CHGNet approximates DFT and is not DFT. Energies are useful for comparing your edit against the structure you started from; they are not publication-grade."
+    >
+      <span class="mark">▮</span>
+      <span style="color: var(--accent)">Vermilion is CHGNet output</span>, not
+      deposited data. It approximates DFT and is not publication-grade.
+    </div>
+
+    <main class="spread">
+      <section class="column-record" id="record">
+        <div id="record-body">
+          <div class="empty-state" style="height: 60vh">
+            Pick a structure to begin.
+          </div>
+        </div>
+      </section>
+
+      <section class="column-geometry">
+        <div class="viewport-wrap">
+          <canvas id="viewport"></canvas>
+          <div class="readout" id="readout" hidden>
+            <div class="label">energy per atom</div>
+            <div class="energy" id="energy-value">--</div>
+            <div class="delta" id="energy-delta"></div>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+
+        <div class="trace is-idle" id="trace-strip">
+          <canvas id="trace-canvas"></canvas>
+          <div class="trace-meta">
+            <div class="status" id="relax-status">idle</div>
+            <div class="estimate" id="relax-estimate"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

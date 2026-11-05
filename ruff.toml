@@ -1,0 +1,15 @@
+# One lint config for backend/, scripts/ and tests/.
+#
+# It lives at the repo root on purpose. With the config only inside
+# backend/pyproject.toml, ruff walked up from scripts/ and tests/, found no
+# config, and linted them under its defaults -- so CI's single
+# `ruff check backend scripts tests` was applying two different rule sets.
+
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[lint.isort]
+known-first-party = ["anneal"]

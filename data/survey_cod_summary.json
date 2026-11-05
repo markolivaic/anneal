@@ -1,0 +1,272 @@
+{
+  "generated_at": "2026-08-07T19:48:03+00:00",
+  "script": "scripts/survey_cod.py",
+  "environment": {
+    "python": "3.12.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "pymatgen": "2026.5.4",
+    "pymatgen_core": "2026.7.31"
+  },
+  "frame": {
+    "query": "",
+    "built_at": "2026-08-06T14:43:29+00:00",
+    "counts": {
+      "default": 528181,
+      "with_duplicates": 533597,
+      "with_errors": 528190,
+      "with_theoretical": 529185,
+      "with_all_three": 534627
+    },
+    "cod_homepage_total": 534673,
+    "sampled_from": 528181
+  },
+  "sample": {
+    "size": 4000,
+    "seed": 20260806,
+    "max_atoms": 150
+  },
+  "funnel": [
+    {
+      "stage": "fetched",
+      "lost": 0,
+      "remaining": 4000,
+      "pct_of_sample": 100.0
+    },
+    {
+      "stage": "parsed",
+      "lost": 57,
+      "remaining": 3943,
+      "pct_of_sample": 98.58
+    },
+    {
+      "stage": "ordered",
+      "lost": 1218,
+      "remaining": 2725,
+      "pct_of_sample": 68.12
+    },
+    {
+      "stage": "hydrogen_declared_present",
+      "lost": 49,
+      "remaining": 2676,
+      "pct_of_sample": 66.9
+    },
+    {
+      "stage": "elements_within_chgnet",
+      "lost": 0,
+      "remaining": 2676,
+      "pct_of_sample": 66.9
+    },
+    {
+      "stage": "geometry_sane",
+      "lost": 4,
+      "remaining": 2672,
+      "pct_of_sample": 66.8
+    },
+    {
+      "stage": "size_within_limit",
+      "lost": 1559,
+      "remaining": 1113,
+      "pct_of_sample": 27.82
+    }
+  ],
+  "independent_pass_counts": {
+    "evaluated_on": 3943,
+    "ordered": 2725,
+    "size_within_limit": 1475,
+    "elements_within_chgnet": 3943
+  },
+  "size_cap_sweep": [
+    {
+      "max_atoms": 16,
+      "survivors": 72,
+      "survival_pct": 1.8,
+      "ci95": [
+        1.43,
+        2.26
+      ],
+      "projected_entries": 9507,
+      "median_sites": 8,
+      "p90_sites": 15
+    },
+    {
+      "max_atoms": 32,
+      "survivors": 145,
+      "survival_pct": 3.62,
+      "ci95": [
+        3.09,
+        4.25
+      ],
+      "projected_entries": 19147,
+      "median_sites": 18,
+      "p90_sites": 30
+    },
+    {
+      "max_atoms": 48,
+      "survivors": 214,
+      "survival_pct": 5.35,
+      "ci95": [
+        4.69,
+        6.09
+      ],
+      "projected_entries": 28258,
+      "median_sites": 25,
+      "p90_sites": 44
+    },
+    {
+      "max_atoms": 64,
+      "survivors": 308,
+      "survival_pct": 7.7,
+      "ci95": [
+        6.91,
+        8.57
+      ],
+      "projected_entries": 40670,
+      "median_sites": 36,
+      "p90_sites": 60
+    },
+    {
+      "max_atoms": 96,
+      "survivors": 590,
+      "survival_pct": 14.75,
+      "ci95": [
+        13.68,
+        15.88
+      ],
+      "projected_entries": 77907,
+      "median_sites": 64,
+      "p90_sites": 92
+    },
+    {
+      "max_atoms": 128,
+      "survivors": 940,
+      "survival_pct": 23.5,
+      "ci95": [
+        22.21,
+        24.84
+      ],
+      "projected_entries": 124123,
+      "median_sites": 84,
+      "p90_sites": 120
+    },
+    {
+      "max_atoms": 150,
+      "survivors": 1113,
+      "survival_pct": 27.82,
+      "ci95": [
+        26.46,
+        29.23
+      ],
+      "projected_entries": 146966,
+      "median_sites": 94,
+      "p90_sites": 138
+    },
+    {
+      "max_atoms": 200,
+      "survivors": 1546,
+      "survival_pct": 38.65,
+      "ci95": [
+        37.15,
+        40.17
+      ],
+      "projected_entries": 204142,
+      "median_sites": 114,
+      "p90_sites": 180
+    }
+  ],
+  "survivors": 1113,
+  "survival_rate": 0.27825,
+  "survival_pct": 27.82,
+  "survival_pct_ci95": [
+    26.46,
+    29.23
+  ],
+  "projected_usable_entries": 146966,
+  "survivor_sites": {
+    "min": 2,
+    "median": 94,
+    "max": 150
+  },
+  "survivors_containing_carbon": 883,
+  "survivor_element_counts": {
+    "H": 906,
+    "C": 883,
+    "O": 791,
+    "N": 698,
+    "S": 202,
+    "Cl": 172,
+    "F": 112,
+    "P": 92,
+    "Br": 82,
+    "Cu": 64,
+    "I": 50,
+    "Si": 43,
+    "B": 42,
+    "Co": 39,
+    "Fe": 35,
+    "Zn": 34,
+    "Ni": 31,
+    "Na": 31,
+    "Mn": 27,
+    "K": 26,
+    "Cd": 23,
+    "Ag": 22,
+    "Sb": 21,
+    "Al": 21,
+    "Sn": 21,
+    "Pb": 18,
+    "Pt": 17,
+    "Au": 17,
+    "As": 16,
+    "Mo": 16,
+    "Ba": 15,
+    "Hg": 15,
+    "Se": 14,
+    "Te": 14,
+    "Li": 13,
+    "Sr": 13,
+    "Pd": 13,
+    "Cs": 13,
+    "Ca": 12,
+    "Cr": 11,
+    "Eu": 11,
+    "Ge": 11,
+    "Mg": 10,
+    "Ce": 10,
+    "U": 10,
+    "Os": 9,
+    "Ti": 9,
+    "La": 9,
+    "W": 9,
+    "In": 9,
+    "V": 8,
+    "Ga": 8,
+    "Ir": 8,
+    "Bi": 8,
+    "Tl": 7,
+    "Ru": 6,
+    "Re": 6,
+    "Sm": 6,
+    "Dy": 5,
+    "Gd": 5,
+    "Nb": 5,
+    "Rb": 5,
+    "Pr": 4,
+    "Rh": 4,
+    "Y": 3,
+    "Hf": 3,
+    "Nd": 3,
+    "Th": 2,
+    "Er": 2,
+    "Sc": 2,
+    "Zr": 2,
+    "Ta": 2,
+    "Lu": 2,
+    "Pa": 1,
+    "Pu": 1,
+    "Tb": 1,
+    "Tm": 1,
+    "Yb": 1,
+    "Ac": 1
+  }
+}

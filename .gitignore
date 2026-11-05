@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+node_modules/
+web/dist/
+
+# Fetched from COD at runtime and rebuilt by the scripts in scripts/.
+# The outputs next to it -- survey_cod.csv, survey_cod_summary.json,
+# catalog.csv, catalog_summary.json, benchmark.json -- are committed.
+# The 900 MB of cached CIFs that produced them is not.
+data/cache/

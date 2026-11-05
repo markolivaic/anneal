@@ -1,0 +1,19 @@
+# Development is on Windows, CI runs on ubuntu-latest. Without this, line
+# endings depend on whoever cloned the repo and on their core.autocrlf setting,
+# which is the same class of cross-platform mismatch that running CI on Linux is
+# meant to catch.
+#
+# Everything text is normalised to LF in the repository. Checkouts still get
+# native endings where a tool needs them.
+* text=auto eol=lf
+
+# Binary, never normalised. The walkthrough media in particular would be
+# silently corrupted by newline translation.
+*.png  binary
+*.jpg  binary
+*.gif  binary
+*.mp4  binary
+
+# CIF fixtures are compared byte-for-byte against what COD served, and their
+# checksums are how their provenance is verifiable at all.
+*.cif  -text

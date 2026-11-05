@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "anneal"
+version = "0.1.0"
+description = "Filter and relax Crystallography Open Database structures with CHGNet"
+requires-python = ">=3.11"
+# Named, not read from a path. `file = "../LICENSE"` looks tidier and breaks a
+# clean install: setuptools refuses to read anything outside the project
+# directory, so `pip install -e backend` fails on a fresh clone while working
+# fine in a tree where the package was already installed. The licence text
+# itself lives in LICENSE at the repo root.
+license = { text = "MIT" }
+dependencies = [
+    "pymatgen>=2025.1.1",
+    "requests>=2.31",
+    "urllib3>=2.0",
+    "numpy>=1.26",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+]
+
+# CHGNet pulls torch, which is ~250 MB and not needed to run the COD survey or
+# the filter tests. Install it when you want to relax something:
+#     pip install -e "backend[model]"
+[project.optional-dependencies]
+model = ["chgnet==0.4.2"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["anneal*"]
+
+# Lint config is deliberately not here -- see ruff.toml at the repo root, which
+# covers backend/, scripts/ and tests/ under one rule set.

@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-10-31T21:26:24+00:00",
+  "script": "scripts/benchmark.py",
+  "environment": {
+    "python": "3.12.1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "AMD64 Family 25 Model 68 Stepping 1, AuthenticAMD",
+    "cpu_count": 16,
+    "torch": "2.13.0",
+    "chgnet": "0.4.2",
+    "pymatgen": "2026.5.4",
+    "pymatgen_core": "2026.7.31",
+    "device": "cpu"
+  },
+  "model": {
+    "package_version": "0.4.2",
+    "pretrained_version": "0.3.0",
+    "total_parameters": 412525,
+    "trainable_parameters": 412431,
+    "element_reference_energies": 94
+  },
+  "model_load": {
+    "cold_s": 7.589,
+    "warm_s": 4e-06,
+    "note": "cold includes importing torch; warm is the cached instance"
+  },
+  "repeats": 5,
+  "workload": {
+    "relax_cell": false,
+    "rattle_a": 0.05,
+    "rattle_seed": "the COD id",
+    "fmax_ev_per_a": 0.1
+  },
+  "measurements": [
+    {
+      "cod_id": 1100108,
+      "formula": "Fe",
+      "n_atoms": 2,
+      "atom_graph_edges": 128,
+      "single_point_ms": 74.7,
+      "relax_s": 0.34,
+      "relax_steps": 5,
+      "ms_per_step": 68.8
+    },
+    {
+      "cod_id": 1538012,
+      "formula": "BaY2CuO5",
+      "n_atoms": 36,
+      "atom_graph_edges": 2280,
+      "single_point_ms": 218.1,
+      "relax_s": 9.91,
+      "relax_steps": 40,
+      "ms_per_step": 247.6
+    },
+    {
+      "cod_id": 2001835,
+      "formula": "H13C16IN2O",
+      "n_atoms": 66,
+      "atom_graph_edges": 5418,
+      "single_point_ms": 520.1,
+      "relax_s": 34.15,
+      "relax_steps": 62,
+      "ms_per_step": 550.9
+    },
+    {
+      "cod_id": 2002248,
+      "formula": "La2Zr2O7",
+      "n_atoms": 88,
+      "atom_graph_edges": 5424,
+      "single_point_ms": 423.5,
+      "relax_s": 14.01,
+      "relax_steps": 31,
+      "ms_per_step": 451.9
+    },
+    {
+      "cod_id": 2211979,
+      "formula": "InH22C16S2N8Cl3O",
+      "n_atoms": 106,
+      "atom_graph_edges": 8048,
+      "single_point_ms": 635.5,
+      "relax_s": 39.74,
+      "relax_steps": 57,
+      "ms_per_step": 697.3
+    },
+    {
+      "cod_id": 7050089,
+      "formula": "AgH10C12N5O3",
+      "n_atoms": 124,
+      "atom_graph_edges": 10104,
+      "single_point_ms": 847.1,
+      "relax_s": 54.52,
+      "relax_steps": 66,
+      "ms_per_step": 826.1
+    },
+    {
+      "cod_id": 7708914,
+      "formula": "H9C5N7O4",
+      "n_atoms": 150,
+      "atom_graph_edges": 14244,
+      "single_point_ms": 1180.7,
+      "relax_s": 79.77,
+      "relax_steps": 53,
+      "ms_per_step": 1505.2
+    }
+  ],
+  "cost_model": {
+    "form": "ms_per_step = intercept_ms + ms_per_edge * atom_graph_edges",
+    "intercept_ms": -4.503,
+    "ms_per_edge": 0.095941,
+    "r_squared": 0.958,
+    "r_squared_atoms": 0.8453,
+    "rel_spread": 0.168,
+    "floor_ms": 68.8,
+    "step_range": [
+      5,
+      66
+    ],
+    "median_steps": 53,
+    "fitted_on": 7
+  }
+}
